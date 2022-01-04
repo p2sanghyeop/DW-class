@@ -9,3 +9,5 @@ defalt - 기본값을 의미
 git init - 주소설정 필요 - git remote 주소
 git clone - 주소설정 필요X
 git pull - 동기화
+출근전 항상 pull을 해서 동기화를 하고
+퇴근전 add 와 commit을 한후 push를 한다
