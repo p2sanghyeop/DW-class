@@ -12,3 +12,4 @@ git pull - 동기화
 출근전 항상 pull을 해서 동기화를 하고
 퇴근전 add 와 commit을 한후 push를 한다
 앞으로는 vscode를 메모장 대신해서 쓴다
+vs code로 github를 수정할때 항상 메시지를 써야하나??
