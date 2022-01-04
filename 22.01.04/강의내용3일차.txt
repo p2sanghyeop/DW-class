@@ -1,0 +1,11 @@
+자바 설정
+내 pc->시스템->고급시스템 설정->환경변수->시스템변수 새로만들기-> 변수 이름 설정
+->JDK 설치폴더 진입->변수값 java 경로 입력->path 편집->새로만들기->%변수이름%\bin\
+->cmd javac입력->cmd java -version 입력
+
+ IT용어
+defalt - 기본값을 의미
+
+git init - 주소설정 필요 - git remote 주소
+git clone - 주소설정 필요X
+git pull - 동기화
