@@ -16,3 +16,5 @@ vs code로 github를 수정할때 항상 메시지를 써야하나??
 pull을 사용할려면 문서가 수정본이 있어야 한다
 vscode를 이용해서 git을 pull시켜보자
 vscode는 github사용을 편하게 도와준다
+vscode를 잘 사용하는것이 앞으로
+일하는것에 도움을 준다
