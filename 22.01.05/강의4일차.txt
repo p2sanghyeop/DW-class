@@ -27,3 +27,26 @@ where actor의 번호가 몇번인지 작성
 ->둘다 안나올시 가장 상단부터 본다
 영어구글링
 ->how to/ what is -> 목적 
+my sql->db->table->data
+데이터는 테이블에 있고 데이터 베이스는 테이블을 관리
+테이블은 서로 관계가 있음->관계형 데이터베이스(RDB)
+비관계형데이터베이스->no sql(몽고db)->IOT, AI에 쓰임
+서로 데이터를 공유할수있음->관계형이기 때문->데이터 조작이 힘듬
+데이터 타입 - pc가 인식하지 못하기 때문에 입력
+int-숫자(정수)=4byte 
+1byte=8bit(pc의 최소단위) - 2의 팔제곱
+서브넷마스크는0부터 세기 때문에 255가 된다
+VARCHAR-문자
+DDL(Data Definition Language) 데이터 정의 언어
+CREATE TABLE - table name : table 생성
+DROP TABLE - table name : table 삭제
+ALTER TABLE - table name table 수정(테이블 이름변경)
+DML(Data Mainpulation Languange) 데이터 조작 언어
+SELECT : 데이터 조회
+DELETE : 데이터 삭제
+UPDATE : 데이터 수정
+INSERT : 데이터 생성
+DCL(Data Control Language) 데이터 제어 언어
+GRANT : 특정 사용자에게 권한 부여
+REVOKE : 특정 사용자 권한 회수
+블록체인은 데이터베이스다
