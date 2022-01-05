@@ -50,3 +50,11 @@ DCL(Data Control Language) 데이터 제어 언어
 GRANT : 특정 사용자에게 권한 부여
 REVOKE : 특정 사용자 권한 회수
 블록체인은 데이터베이스다
+가장 위 박스 priverkey(PK) - 테이블의 고유값->겹칠수 없음=고유번호
+속성, 컬럼 propertis -하나의 행
+select 컬럼이름
+from 테이블
+where 조건, 필터링
+* 에스터리스크 모든 컬럼 조회 
+순서
+from먼저 조회 where을 조회, select를 조회->1.from 2.where 3.select
