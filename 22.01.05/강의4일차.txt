@@ -58,3 +58,4 @@ where 조건, 필터링
 * 에스터리스크 모든 컬럼 조회 
 순서
 from먼저 조회 where을 조회, select를 조회->1.from 2.where 3.select
+테이블 먼저 입력하고 데이터를 입력한다
