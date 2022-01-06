@@ -1,0 +1,25 @@
+select
+avg(sal)
+from emp
+where job = 'manager'
+
+
+select 
+avg(SAL),
+count(*)
+from emp
+where hiredate > '1987-06-28'
+
+select 
+min(sal),
+ename,
+hiredate
+from emp
+
+select
+count(comm)
+from emp
+where hiredate > '1981-02-22'
+and job = 'salesman'
+ 
+
