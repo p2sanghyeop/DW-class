@@ -1,0 +1,25 @@
+select 
+max(sal),
+min(sal),
+count(*)
+from emp
+where deptno != 10
+group by job,deptno
+having count(*)<=3
+order by count(*) 
+
+select
+sum(sal),
+deptno
+from emp
+where deptno = 10 or deptno = 30
+group by deptno
+having sum(sal) >= 5000
+
+select 
+avg(sal),
+sum(sal)
+from emp
+where job != 'manager'
+group by job
+having avg(sal) >= 1000
