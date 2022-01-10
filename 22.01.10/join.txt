@@ -1,0 +1,19 @@
+조인을 통해서 데이터를 가져와야함
+조인
+1. 조인
+-> 교집합 데이터를 찾아내야함
+-> emp 테이블과 dept 테이블을 비교했을때
+deptno(부서번호)
+select
+e.ename,
+d.dname
+from emp as e
+inner join dept as d
+on e.deptno=d.deptno
+2. 아우터 조인
+2-1. left
+2-2. right
+3-3. full
+3. 셀프조인
+특별한 문법이 없음
+같은 테이블 조인할 때
