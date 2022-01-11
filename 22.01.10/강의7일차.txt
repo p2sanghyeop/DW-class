@@ -86,3 +86,8 @@ pk와 fk 작업을 여기서 함
 
 서브쿼리는 정말 어쩔수 없이 특별할때 쓴다
 form 서브쿼리는 데이터를 필터링 할때 쓴다
+
+date format 으로 연도 만 출력할때
+select 
+date_format(HIREDATE, '%Y') 
+from emp 
