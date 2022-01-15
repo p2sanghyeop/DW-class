@@ -56,6 +56,12 @@ for문 쓰는 방식
 -> 구형 for문
 
 
+정렬오름차순
+int array[] = {5,11,2,0,7};
+		Arrays.sort(array);
+		for(int i=0; i<array.length; ++i) {
+			System.out.println(array[i]);
+		}
 정렬 내림차순
 Integer[] array = {5,11,2,0,7};
 		Arrays.sort(array, Collections.reverseOrder());
