@@ -18,6 +18,9 @@ String id ="Java";
 			System.out.println("아이디가 다릅니다");
 	}
 
+
+배열
+
 무의미하게 나열된 문자를 방지하기 위해 사용
 
 int array[] = {2,4,6,9};
