@@ -1,0 +1,14 @@
+public static String solution(int num){
+	if((num%2)==0) {
+		return "Even";
+	}
+	else {
+		return "Odd";
+	}
+	}
+public static void main(String[] args) {
+	int x = 3;
+	String result = solution(x);
+	System.out.println(result);
+
+}
