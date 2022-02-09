@@ -1,0 +1,6 @@
+create table subject(
+	id int (11),
+	name varchar(20) not null,
+	create_at datetime default current_timestamp,
+	constraint subjevt_id_pk primary key(id)
+)
