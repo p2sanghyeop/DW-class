@@ -6,15 +6,15 @@ class coffee{
 		return this.count;
 	}
 	public void buyCoffee(int count) {
-		 this.count+=count ;
+		int sum = this.count+=count ;
 		 System.out.println("커피"+count+"구입");
-		if(0<count && count<=10) {
+		if(0<sum && sum<=10) {
 			System.out.println("브론즈");
 		}
-		if(10<this.count && this.count<=20) {
+		if(10<sum && sum<=20) {
 			System.out.println("실버");
 		}
-		if(count>20) {
+		if(sum>20) {
 			System.out.println("골드");
 		}
 	}
@@ -34,9 +34,11 @@ public class cafe {
 		System.out.println("현재커피"+coffee.getCoffee());
 		coffee.buyCoffee(20);
 		if(coffee.getCoffee()>0) {
-			System.out.println("마신커피"+ coffee.getCoffee());
+			System.out.println("남은커피"+ coffee.getCoffee());
+			coffee.drinkCoffee(30);
+			System.out.println("남은커피"+ coffee.getCoffee());
 			coffee.buyCoffee(10);
-			System.out.println("마신커피"+ coffee.getCoffee());
+			System.out.println("남은커피"+ coffee.getCoffee());
 		}
 	
 	}
