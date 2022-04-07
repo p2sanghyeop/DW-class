@@ -8,17 +8,17 @@ class coffee{
 	public void buyCoffee(int count) {
 		int sum = this.count+=count ;
 		 System.out.println("커피"+count+"구입");
-		if(0<sum && sum<=10) {
+		if(10<sum && sum<=20) {
 			System.out.println("브론즈");
 		}
-		if(10<sum && sum<=20) {
+		if(20<sum && sum<=30) {
 			System.out.println("실버");
 		}
-		if(sum>20) {
+		if(sum>30) {
 			System.out.println("골드");
 		}
 	}
-	public void drinkCoffee(int count){ //먹은 사과
+	public void drinkCoffee(int count){ 
 		if(this.count >= count){
 			System.out.println("커피를 "+count+"개 마심");
 			this.count -= count;
