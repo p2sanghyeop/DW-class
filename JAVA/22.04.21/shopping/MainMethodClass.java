@@ -26,12 +26,22 @@ public class MainMethodClass {
 		//3. 현재날짜 기준으로 90일동안 방문 없었던 회원 휴먼 계정으로 수정.
 		service.updateNotSleeperToSleeper(userList, 90);
 		//4. 휴먼계정 인원 수 조회.
+		service.getSleeperUserCount(userList);
 		//5. 휴먼계정이 아닌 회원에게 100포인트 추가 지급.
+		service.getPointRankerUser(userList);
 		//6. 포인트가 가장 높은 회원 조회.(단, 중복데이터는 없다고 가정)
 		service.updatePoint(userList, 0);
 		//7. 특정 회원에게 상품구매 발생.
-	    //   구매한 상품의 가격 5%가 포인트로 지급. 
+	    //   구매한 상품의 가격 5%가 포인트로 지급.
+		 ProductVO p = new  ProductVO();
+		 p.setPrice(70000);
+		 p.setProductName("닌텐도스위치");
+		service.getPurchaseRankerUser(userList, p, 130);
 		//8. 구매이력이 있는 회원만 조회.
-		
+		for(int i=0; i<userList.size(); ++i) {
+			if(userList.get(i).getList() == null) {
+				System.out.println(userList.get(i).getUserName()+userList.get(i).getUserNo());
+			}
+		}
 	}
 }

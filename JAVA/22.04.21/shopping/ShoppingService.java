@@ -20,7 +20,7 @@ public class ShoppingService implements ShoppingServiceImpl {
 				temp = i;
 			}
 		}
-		System.out.println("포인트 가장 많은 사람"+list.get(temp).getUserName()+list.get(temp).getUserNo());
+		System.out.println("포인트 가장 많은 사람 "+list.get(temp).getUserName()+list.get(temp).getUserNo());
 		return list;
 	}
 
@@ -28,7 +28,7 @@ public class ShoppingService implements ShoppingServiceImpl {
 	public List<UserVO> getFindByName(List<UserVO> list, String word) {
 		for(int i=0; i< list.size(); ++i) {
 			if(list.get(i).getUserName().substring(0, 1).equals("S")) {
-				System.out.println("S로 시작하는 사람"+list.get(i).getUserName()+list.get(i).getUserNo());
+				System.out.println("S로 시작하는 사람 "+list.get(i).getUserName()+list.get(i).getUserNo());
 			}
 		}
 		return null;
@@ -36,18 +36,13 @@ public class ShoppingService implements ShoppingServiceImpl {
 
 	@Override
 	public int getSleeperUserCount(List<UserVO> list) {
-		Calendar cal = Calendar.getInstance();
-		Calendar cal2 = Calendar.getInstance();
-		cal.setTime(new Date());
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		cal.add(Calendar.DATE, -90);
-		cal2.setTime(cal.getTime());
-		cal2.add(Calendar.DATE, -90);
-		System.out.println(df.format(cal.getTime()));
-		System.out.println(df.format(cal2.getTime()));
+		int count = 0;
 		for(int i=0; i<list.size(); ++i) {
-			
+			if(list.get(i).isSleeper()) {
+				++count;
+			}
 		}
+		System.out.println("휴먼계정수 "+count);
 		return 0;
 	}
 
@@ -70,7 +65,7 @@ public class ShoppingService implements ShoppingServiceImpl {
 				else {
 					list.get(i).setSleeper(false);
 				}
-				System.out.println("이름"+list.get(i).getUserName()+"휴먼여부"+list.get(i).isSleeper());
+				System.out.println("이름 "+list.get(i).getUserName()+" 휴먼여부 "+list.get(i).isSleeper());
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();//에러를 추적하겠다
@@ -88,20 +83,32 @@ public class ShoppingService implements ShoppingServiceImpl {
 				temp = i;
 			}
 		}
-		System.out.println("포인트 가장 높은 사람"+list.get(temp).getUserName()+list.get(temp).getUserNo());
+		System.out.println("포인트 가장 높은 사람 "+list.get(temp).getUserName()+list.get(temp).getUserNo());
 		return list;
 	}
 
 	@Override
 	public UserVO getPointRankerUser(List<UserVO> list) {
-		// TODO Auto-generated method stub
+		for(int i=0; i<list.size(); ++i) {
+			if(!list.get(i).isSleeper()) {
+				list.get(i).setPoint(list.get(i).getPoint()+100);
+			}
+			System.out.println("포인트 "+list.get(i).getPoint());
+		}
 		return null;
 	}
 
 	@Override
 	public List<UserVO> getPurchaseRankerUser(List<UserVO> list, ProductVO vo, int userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		double pulspoint = 0.05;
+		for(int i=0; i<list.size(); ++i) {
+			double totalpoint = vo.getPrice()*pulspoint;
+			if(list.get(i).getUserNo() == userNo) {
+				list.get(i).setPoint(list.get(i).getPoint()+(int)totalpoint);
+				System.out.println("이름 "+list.get(i).getUserName()+" 포인트합산 "+list.get(i).getPoint());
+			}
+		}
+		return list;
 	}
 
 }
