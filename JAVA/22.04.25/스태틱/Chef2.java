@@ -10,5 +10,9 @@ public class Chef2 {
 		System.out.println("hello world");
 	}
 	
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 863cad6772c281d20370a81b96da032f81a8f785
 }
