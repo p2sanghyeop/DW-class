@@ -1,4 +1,4 @@
-package ½ºÅÂÆ½;
+package ìŠ¤íƒœí‹±;
 
 public class Chef2 {
 	static Chef2 c2;
