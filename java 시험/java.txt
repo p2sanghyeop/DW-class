@@ -1,0 +1,48 @@
+1. 리턴 타입 : int
+   메소드 이름 : getCount
+   파라미터 타입 : list
+
+2. 리턴 타입 : 없음
+   메소드 이름 : insertData
+   파라미터 타입 : map
+
+3. 리턴 타입 : list
+   메소드 이름 : insertData
+   파라미터 타입 : String
+
+4. 오버로딩 : 메소드 이름이 같아도 
+   파라미터값을 다르게하면 함수를 
+   쓸수 있게 해줌
+   
+   오버라이딩 : 부모클래스에서 불러온
+   메소드를 자식 클래스에서 덮어쓸때
+   사용
+
+5. 추상클래스는 다중 상속이 불가능
+   하지만 인터페이스는 가능
+
+6. 부모클래스의 기능(메소드)을 
+   자식클래스 에서 사용할수 
+   있게 하는 것
+
+7. 초기화가 목적이라 리턴 타입이 
+   없다
+
+8. list를 이용해 배열 사용을 쉽게
+   해줌
+
+9. a1.count : 10
+   a1.temp : 20
+   a2.count : 20
+   a2.temp : 20
+
+10. 2000
+
+11. class A{
+    private String name;
+    private int age;
+    
+   public A(String name, int age){
+   this.name = name;
+   this.age = age;
+}
