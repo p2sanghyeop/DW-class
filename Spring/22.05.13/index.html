@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 1200px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .container h1{
+            padding-bottom: 30px;
+        }
+        .emp-table{
+            width: 100%;
+            height: 400px;
+            box-shadow: 0 3px 7px gray;
+            background-color: snow;
+        }
+        tr{
+            border: 1px solid black;
+        }
+        tr:nth-child(even){
+            background-color: aqua;
+        }
+        thead{
+            box-shadow: 0 1px 5px gray;
+        }
+        th{
+            padding: 1rem 2rem;
+            letter-spacing: 0.4rem;
+            font-size:  15px;
+            font-weight: 800;
+            text-align: center;
+        }
+        td{
+            font-size: 13px;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        a{
+            cursor: pointer;
+        }
+        .emp-enroll{
+            margin: 20px auto;
+            text-align: center;
+        }
+        .emp-enroll button{
+            padding: 2%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EMP 사원리스트</h1>
+        <table class="emp-table">
+            <thead>
+                <tr>
+                    <th>사원번호</th>
+                    <th>사원이름</th>
+                    <th>직업</th>
+                    <th>월급</th>
+                    <th>고용날짜</th>
+                    <th>부서번호</th>
+                </tr>
+            </thead>
+            <tbody id="data"></tbody>
+            </table>
+
+    <div class="emp-enroll">
+        <button id="btn" type="button">사원추가</button>
+        <button id="btn-update" type="button">사원수정</button>
+    </div>
+    </div>
+
+    
+    <!--ajax는 jquery에 있는 기능(함수)  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+    crossorigin="anonymous"></script>
+    <script>
+        $.ajax({
+            url : 'http://192.168.0.26:8080/emp',
+            type : 'GET',
+            dataType : 'JSON',
+            success : function(response){
+                var count = 0;
+                var html = "";
+                for(var i=0; i<response.length; ++i){
+                    // if(response[i].deptno == 30){
+                    //     ++count;
+                    // }
+                    html += "<tr><td><a onclick=removeEmp("+response[i].empno+")>"+response[i].empno+"</td><td><a>"+response[i].ename+"</td><td>"+response[i].job+"</td><td>"+response[i].sal+"</td><td>"+response[i].hiredate+"</td><td>"+response[i].deptno+"</td></tr>"
+                    
+                    }
+                    console.log(response);
+                    // console.log(count);
+                $('#data').append(html);
+            },
+            error : function (request, status, error){
+                console.log("에러내용은"+error);
+            }
+        });
+        
+       function removeEmp(empNo){
+        
+
+           if(confirm("사원을삭제하겠습니까")){
+               $.ajax({
+                   url : 'http://localhost:8080/emp/empno/'+ empNo,
+                   type : 'DELETE',
+                   dataType : 'json',
+                   success : function (response){
+                       console.log(response);
+                      
+                           if(response>0){
+                               //새로고침
+                               location.reload();
+                           }
+                           else{
+                               alert("삭제불가");
+                           }
+                       
+                   },
+               });
+           }
+
+        }
+        //사원추가
+        $('#btn').click(function(){
+            let jsonData = {
+                "empno" : 1,
+                "ename" : "유영준",
+                "job" : "백수",
+                "deptno" : 20
+ 
+            };
+
+            $.ajax({
+                   url : 'http://localhost:8080/emp',
+                   type : 'POST',
+                   contentType : "application/json",
+                   dataType : 'json',
+                   data : JSON.stringify(jsonData),
+                   //JSON.stringify를 안해주면 jsondata를 문자로 인식함
+                   success : function (response){
+                       console.log(response);
+                   }
+               });
+        });
+        $('#btn-update').click(function(){
+            let jsonData = {
+                "job" : "MANAGER",
+                "sal" : 5000
+            };
+            let empno = 7902;
+            
+            $.ajax({
+                   url : 'http://localhost:8080/api/v1/emp/'+empno,//컨트롤러주소
+                   type : 'PATCH', //http 메소드(get, deletem postm patch)
+                   contentType : "application/json", // 보낼때 json으로
+                   dataType : 'json', //서버의 결과를 json으로 응답받는다
+                   data : JSON.stringify(jsonData), //실제 json 데이터
+                   //JSON.stringify를 안해주면 jsondata를 문자로 인식함
+                   success : function (response){
+                       console.log(response);
+                   }
+               });
+        });
+    </script>
+</body>
+</html>
