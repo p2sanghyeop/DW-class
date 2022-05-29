@@ -5,7 +5,6 @@
 
  IT용어
 defalt - 기본값을 의미
-
 git init - 주소설정 필요 - git remote 주소
 git clone - 주소설정 필요X
 git pull - 동기화
