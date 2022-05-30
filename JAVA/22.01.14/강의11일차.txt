@@ -65,6 +65,7 @@ int array[] = {5,11,2,0,7};
 		for(int i=0; i<array.length; ++i) {
 			System.out.println(array[i]);
 		}
+		
 정렬 내림차순
 Integer[] array = {5,11,2,0,7};
 		Arrays.sort(array, Collections.reverseOrder());
