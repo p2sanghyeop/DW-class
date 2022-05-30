@@ -110,6 +110,7 @@ default		...
 		}
 		}
 	}
+	
 public static int 최대값구하기(int [] array) {
 		int max =0 ;
 		if(array.length>5) {
