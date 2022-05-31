@@ -105,7 +105,7 @@
          <div class="cardBox">
              <div class="card">
                  <div>
-                    <div class="numbers">1,400</div>
+                    <div id="studentscnt" class="numbers">1,400</div>
                     <div class="cardName">학생 수</div>
                  </div>
                  <div class="iconBx">
@@ -114,7 +114,7 @@
              </div>
              <div class="card">
                 <div>
-                   <div class="numbers">500</div>
+                   <div id="boardcnt" class="numbers">500</div>
                    <div class="cardName">게시글 수</div>
                 </div>
                 <div class="iconBx">
@@ -123,7 +123,7 @@
             </div>
             <div class="card">
                 <div>
-                   <div class="numbers">300</div>
+                   <div id="writecnt" class="numbers">300</div>
                    <div class="cardName">작성자 수</div>
                 </div>
                 <div class="iconBx">
@@ -132,7 +132,7 @@
             </div>
             <div class="card">
                 <div>
-                   <div class="numbers">2,800</div>
+                   <div id="viewcnt" class="numbers">2,800</div>
                    <div class="cardName">총 조회 수</div>
                 </div>
                 <div class="iconBx">
@@ -233,6 +233,28 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
+    getBoardStartList();
+
+    function getBoardStartList(){
+        $.ajax({
+        url : 'http://localhost:8080/api/v1/board/startlist',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response){        
+            //text() or html() input을 제회한 태그를 컨트롤 할때 사용
+            //val()은 input 컨트롤할때 사용
+            console.log(response)
+            $('#boardcnt').text(response.boardcnt)
+            $('#studentscnt').text(response.studentscnt)
+            $('#viewcnt').text(response.viewcnt)
+            $('#writecnt').text(response.writecnt)
+            
+                }
+                 
+        })
+        
+    }
+
     //게시판작성, 게시판 리스트 호출
     $('#contentSubmit').click(function(){
         if(confirm('게시글을 작성하시겠습니까?')){
