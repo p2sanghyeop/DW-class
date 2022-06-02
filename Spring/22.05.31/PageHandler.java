@@ -50,7 +50,7 @@ public class PageHandler {
 		int lastPage = 0;
 		//힌트 startPage를 먼저 구함
 		startPage = (nowBlock*navigatePage)-(navigatePage-1);
-		lastPage = (nowBlock*navigatePage);
+		lastPage = (nowBlock*navigatePage)/(startPage)-(navigatePage-1);
 		if(nowBlock == lastBlock) {
 			lastPage = pages;
 		}
