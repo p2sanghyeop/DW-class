@@ -41,7 +41,7 @@
     for(int i=0; i<2; ++i){
         System.out.println(i);
     }
-    정답) 0, 1, 2
+    정답) 0, 1
 
 7. 아래 for문을 실행하면 i의 값을 차례대로 쓰시오.
     int sum = 0;
