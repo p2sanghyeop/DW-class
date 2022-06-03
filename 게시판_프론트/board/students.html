@@ -101,7 +101,7 @@
                         </tr>
                      </thead>
                      <tbody id="boardData">
-                         <tr>
+                         <!-- <tr>
                              <td>hyunsangwon</td>
                              <td>현상원</td>
                              <td>2022-05-19</td>
@@ -115,17 +115,17 @@
                             <td>hyunsangwon</td>
                             <td>현상원</td>
                             <td>2022-05-19</td>
-                        </tr>
+                        </tr> -->
                      </tbody>
                  </table>
                  <div class="pagination">
-                    <a href="#">Previous</a>
+                    <!-- <a href="#">Previous</a>
                     <a href="#">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
                     <a href="#">4</a>
                     <a href="#">5</a>
-                    <a href="#">Next</a>
+                    <a href="#">Next</a> -->
                  </div>
              </div>
          </div>
@@ -147,6 +147,73 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
+    function getStudentsList(pageNum, pageSize){
+        $.ajax({
+             url : 'http://localhost:8080/api/v1/students/map?pageNum='+pageNum+'&pageSize='+pageSize,
+             type : 'GET',
+             dataType : 'json',
+            success : function(response){
+                console.log(response)
+                var html =''
+                if(response.list.length>0){
+                    for(var i=0; i<response.list.length; ++i){
+                        html += '<tr><td>'+response.list[i].studentsId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].createAt+'</td></tr>'
+                    }
+                    var paginationHtml = '';
+                        if(response.hasPreviousPage){ //이전 페이지가 true 라면
+                            paginationHtml += '<a onclick="getStudentsList('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
+                        }
+                        for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
+                            paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getStudentsList('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
+                        }
+                        if(response.hasNextPage){ //다음 페이지가 true 라면
+                            paginationHtml += '<a onclick="getStudentsList('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
+                        }
+                        $('.pagination').children().remove()
+                        $('.pagination').append(paginationHtml);
+                        //페이지 번호에 맞게 css 수정
+                        $('#pageNum'+pageNum).css('backgroundColor','#287bff')
+                        $('#pageNum'+pageNum).css('color','#fff')
+                }
+                else{
+                    html += '<tr><td colspan=3 style="text-align: center;">게시글이 없습니다</td></tr>'
+                }
+                $('#boardData').children().remove()
+                $('#boardData').append(html)
+            },
+         })
+    }
+    getStudentsList(1,10);
 
+    $('#searchBar').keyup(function(key){
+        //엔터를 누를때 출력 hello word를 출력하고 싶음
+        //13은 엔터의미
+        if(key.keyCode ==13){
+            console.log('hello word')
+            //1. input 값 가져옴
+            var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
+            console.log(search)
+            //2. ajax 호출
+            $.ajax({
+        url : 'http://localhost:8080/api/v1/students/search?studentsName='+search,
+        type : 'GET',
+        dataType : 'json',
+        success : function(response){
+            console.log(response)
+            var html ='';
+            if(response.length>0){
+                for(var i=0; i<response.length; ++i){
+                    html += '<tr><td>'+response[i].studentsId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].createAt+'</td></tr>'
+                }
+            }
+            else{
+                html += '<tr><td colspan=3 style="text-align: center;">학생이 없습니다</td></tr>'
+            }
+            $('#boardData').children().remove()
+            $('#boardData').append(html)
+        },
+    })
+        }
+    })
 </script>
 </html>
