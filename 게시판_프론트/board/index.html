@@ -315,7 +315,7 @@
                     //     response[i].updateAt = '-'
                     // }
                     // 조회수 구현예정 
-                    if(0<=response.list[i].cnt && response.list[i].cnt<10){
+                    if(0<=response.list[i].cnt && response.list[i].cnt<=10){
                         html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=row>'+response.list[i].cnt+'</span></td></tr>'
                     }
                     else if(11<=response.list[i].cnt && response.list[i].cnt<=20){
@@ -331,7 +331,7 @@
                         paginationHtml += '<a onclick="getBoardList('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
                     }
                     for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
-                        paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getBoardList('+response.navigatepageNums[i]+','+pageSize+')href="#">'+response.navigatepageNums[i]+'</a>';
+                        paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getBoardList('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
                     }
                     if(response.hasNextPage){ //다음 페이지가 true 라면
                         paginationHtml += '<a onclick="getBoardList('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
