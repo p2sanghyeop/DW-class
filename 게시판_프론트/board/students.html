@@ -9,6 +9,22 @@
 </head>
 <body>
     <div class="container">
+        <div class="write-popup">
+            <div class="editor">
+                <div class="input-box">
+                    <label for="studentsName">학생 이름 : </label>
+                    <input id="studentsName" type="text" placeholder="이름을 입력하세요...">
+                </div>
+                <div class="input-box">
+                    <label for="studentsPassword">학생 비밀번호 : </label>
+                    <input id="studentsPassword" type="text" placeholder="비밀번호를 입력하세요...">
+                </div>
+                <div class="btn-area">
+                    <a href="#" class="btn-cancel">취소</a>
+                    <a id="studentsSubmit" href="#" class="btn-success">등록</a>
+                </div>
+            </div>
+        </div>
         <!-- 학생 정보 수정 -->
         <div class="update-popup">
             <div class="editor">
@@ -21,14 +37,14 @@
                 </div>
                 <div class="input-box">
                     <label for="studentsName">학생 이름 : </label>
-                    <input id="studentsName" type="text" placeholder="이름을 입력하세요...">
+                    <input id="upt-studentsName" type="text" placeholder="이름을 입력하세요...">
                 </div>
                 <div class="input-box">
                     <label for="studentsPassword">학생 비밀번호 : </label>
-                    <input id="studentsPassword" type="text" placeholder="이름을 입력하세요...">
+                    <input id="upt-studentsPassword" type="text" placeholder="이름을 입력하세요...">
                 </div>
                 <div class="btn-area">
-                    <input id="boardIdHidden" type="hidden">
+                    <input id="studentsIdHidden" type="hidden">
                     <a id="contentUpdate" href="#" class="btn-update">수정</a>
                     <a id="contentDelete" href="#" class="btn-delete">삭제</a>
                 </div>
@@ -91,6 +107,7 @@
              <div class="recentOrders">
                  <div class="cardHeader">
                      <h2>학생 명단</h2>
+                     <a href="#" class="btn">학생 추가</a>
                  </div>
                  <table>
                      <thead>
@@ -145,8 +162,21 @@
         this.classList.add('hovered');
     }
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
+
 </script>
 <script>
+    $('.btn').click(function(){
+        $('.write-popup').css('display', 'block');
+    });
+    $('.btn-cancel').click(function(){
+        $('.write-popup').css('display', 'none');
+    });
+    $('.btn-close').click(function(){
+        $('.update-popup').css('display', 'none');
+    })
+</script>
+<script>
+    //페이징및 게시판 리스트 호출
     function getStudentsList(pageNum, pageSize){
         $.ajax({
              url : 'http://localhost:8080/api/v1/students/map?pageNum='+pageNum+'&pageSize='+pageSize,
@@ -157,26 +187,28 @@
                 var html =''
                 if(response.list.length>0){
                     for(var i=0; i<response.list.length; ++i){
-                        html += '<tr><td>'+response.list[i].studentsId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].createAt+'</td></tr>'
+                        html += '<tr onclick="getStudents('+response.list[i].studentsId+')"><td>'+response.list[i].studentsId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].createAt+'</td></tr>'
                     }
+                    
                     var paginationHtml = '';
-                        if(response.hasPreviousPage){ //이전 페이지가 true 라면
-                            paginationHtml += '<a onclick="getStudentsList('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
-                        }
-                        for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
-                            paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getStudentsList('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
-                        }
-                        if(response.hasNextPage){ //다음 페이지가 true 라면
-                            paginationHtml += '<a onclick="getStudentsList('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
-                        }
-                        $('.pagination').children().remove()
-                        $('.pagination').append(paginationHtml);
-                        //페이지 번호에 맞게 css 수정
-                        $('#pageNum'+pageNum).css('backgroundColor','#287bff')
-                        $('#pageNum'+pageNum).css('color','#fff')
+                    if(response.hasPreviousPage){ //이전 페이지가 true 라면
+                        paginationHtml += '<a onclick="getStudentsList('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
+                    }
+                    for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
+                        paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getStudentsList('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
+                    }
+                    if(response.hasNextPage){ //다음 페이지가 true 라면
+                        paginationHtml += '<a onclick="getStudentsList('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
+                    }
+                    $('.pagination').children().remove()
+                    $('.pagination').append(paginationHtml);
+                    //페이지 번호에 맞게 css 수정
+                    $('#pageNum'+pageNum).css('backgroundColor','#287bff')
+                    $('#pageNum'+pageNum).css('color','#fff')
                 }
+                
                 else{
-                    html += '<tr><td colspan=3 style="text-align: center;">게시글이 없습니다</td></tr>'
+                    html += '<tr><td colspan=3 style="text-align: center;">학생이 없습니다</td></tr>'
                 }
                 $('#boardData').children().remove()
                 $('#boardData').append(html)
@@ -189,7 +221,6 @@
         //엔터를 누를때 출력 hello word를 출력하고 싶음
         //13은 엔터의미
         if(key.keyCode ==13){
-            console.log('hello word')
             //1. input 값 가져옴
             var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
             console.log(search)
@@ -202,8 +233,8 @@
             console.log(response)
             var html ='';
             if(response.length>0){
-                for(var i=0; i<response.length; ++i){
-                    html += '<tr><td>'+response[i].studentsId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].createAt+'</td></tr>'
+                for(var i=0; i<response.length; ++i){             
+                    html += '<tr onclick="getStudents('+response[i].studentsId+')"><td>'+response[i].studentsId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].createAt+'</td></tr>'
                 }
             }
             else{
@@ -214,6 +245,120 @@
         },
     })
         }
+    })
+    //학생추가
+    $('#studentsSubmit').click(function(){
+        if(confirm('학생을 추가하시겠습니까?')){
+        var studentsName = $('#studentsName').val();
+        var studentsPassword = $('#studentsPassword').val()
+        if(studentsName == ''){
+            alert('이름입력')
+            return 0;
+        }
+        if(studentsPassword == ''){
+            alert('비밀번호입력')
+            return 0;
+        }
+        jsondata = {
+            studentsName : studentsName,
+            studentsPassword : studentsPassword
+        }
+        $.ajax({
+        url : 'http://localhost:8080/api/v1/students',
+        type : 'POST',
+        contentType : 'application/json',
+        dataType : 'json',
+        data : JSON.stringify(jsondata),
+        success : function(response){
+          console.log(response)
+          if(response>0){
+            $('.write-popup').css('display', 'none');
+            $('#studentsName').val('');
+            $('#studentsPassword').val('');
+            $('#boardData').children().remove();
+            getStudentsList(1,10)
+            
+                }
+            }     
+        })
+    }
+
+        });
+    //클릭한 게시물 확인
+    function getStudents(studentsId){
+        console.log(studentsId)
+        $('.update-popup').css('display', 'block')
+        $.ajax({
+            url : 'http://localhost:8080/api/v1/students/id/number/'+studentsId,
+            type : 'GET',
+            dataType : 'json',
+            success : function(response){
+                $('#studentsId').val(response.studentsId)
+                $('#studentsIdHidden').val(response.studentsId)
+                $('#studentsName').val(response.studentsName)
+                $('#studentsPassword').val(response.studentsPassword)
+            }
+        })
+    }
+
+     //게시물 수정하는 함수
+     $('#contentUpdate').click(function(){
+        //1. 게시판 번호 확인 
+        var studentsId = $('#studentsIdHidden').val()
+        //2. json생성
+        var studentsName = $('#upt-studentsName').val()
+        var studentsPassword = $('#upt-studentsPassword').val()
+        var jsondata = {
+            studentsId : studentsId,
+            studentsName : studentsName,
+            studentsPassword : studentsPassword
+        }
+        //3. ajax
+        $.ajax({
+        url : 'http://localhost:8080/api/v1/students/id/'+studentsId,
+        type : 'PATCH',
+        contentType : 'application/json',
+        dataType : 'json',
+        data : JSON.stringify(jsondata),
+        success : function(response){
+            if(response>0){
+                alert('수정완료')
+                $('.update-popup').css('display', 'none')
+                location.reload();
+            }
+
+        }
+        
+        })
+    })
+
+    //게시물 삭제
+    $('#contentDelete').click(function(){
+        var studentsId = $('#studentsIdHidden').val()
+        var studentsName = $('#upt-studentsName').val()
+        var studentsPassword = $('#upt-studentsPassword').val()
+        var jsondata = {
+            studentsId :studentsId,
+            studentsName :  studentsName,
+            studentsPassword : studentsPassword
+        }
+        //3. ajax
+        $.ajax({
+        url : 'http://localhost:8080/api/v1/students/id/'+studentsId,
+        type : 'DELETE',
+        contentType : 'application/json',
+        dataType : 'json',
+        data : JSON.stringify(jsondata),
+        success : function(response){
+                alert('삭제완료')
+                $('.update-popup').css('display', 'none')
+                $('#boardData').children().remove();
+                $('#studentsName').val('');
+                $('#studentsPassword').val('');
+                getStudentsList(1,10)
+        }
+        
+    })
     })
 </script>
 </html>
