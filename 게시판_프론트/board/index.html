@@ -58,13 +58,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="index.html">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Dashboard</span>                
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="students.html">
                         <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="title">Students</span>                
                     </a>
@@ -247,8 +247,9 @@
             console.log(response)
             $('#boardcnt').text(response.boardcnt)
             $('#studentscnt').text(response.studentscnt)
-            $('#viewcnt').text(response.viewcnt)
             $('#writecnt').text(response.writecnt)
+            $('#viewcnt').text(response.viewcnt)
+            console.log(response.viewcnt);
             
                 }
                  
@@ -262,7 +263,7 @@
         var studentsName = $('#studentsName').val();
         var title = $('#title').val();
         var content = $('#content').val();
-        var studentsId = 9
+        var studentsId = 16
         if(title == ''){
             alert('제목입력')
             return 0;
@@ -375,6 +376,7 @@
             $('#upt-content').val(response.content)
             $('#boardIdHidden').val(response.boardId)
             setBoardViews(boardId) //조회수 함수
+            
 
         }
     })
@@ -401,8 +403,7 @@
         success : function(response){
             if(response>0){
                 alert('수정완료')
-                $('.update-popup').css('display', 'none')
-                location.reload();
+                $('.update-popup').css('display', 'none');
             }
 
         }
@@ -445,41 +446,62 @@
         success : function(response){
             if(response > 0){
                     $('#boardData').children().remove();//tbody id
-                    getBoardList(1,10);
+                    // getBoardList(1,10);
                 }
         }
         
     })
     }
-
+    
     $('#searchBar').keyup(function(key){
         //엔터를 누를때 출력 hello word를 출력하고 싶음
         //13은 엔터의미
         if(key.keyCode ==13){
-            console.log('hello word')
+            getFind(1,10)
             //1. input 값 가져옴
-            var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
+            
+        }
+    })
+
+    function getFind(pageNum, pageSize){
+        var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
             console.log(search)
             //2. ajax 호출
             $.ajax({
-        url : 'http://localhost:8080/api/v1/board/search?writer='+search,
+        url : 'http://localhost:8080/api/v1/board/search?writer='+search+'&pageNum='+pageNum+'&pageSize='+pageSize,
         type : 'GET',
         dataType : 'json',
         success : function(response){
             console.log(response)
             var html ='';
-            if(response.length>0){
-                for(var i=0; i<response.length; ++i){
-                    if(0<=response[i].cnt && response[i].cnt<10){
-                        html += '<tr onclick=getBoard('+response[i].boardId+')><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class=row>'+response[i].cnt+'</span></td></tr>'
+            if(response.list.length>0){
+                for(var i=0; i<response.list.length; ++i){
+                    if(0<=response.list[i].cnt && response.list[i].cnt<10){
+                        html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=row>'+response.list[i].cnt+'</span></td></tr>'
                     }
-                    else if(11<=response[i].cnt && response[i].cnt<=20){
-                        html += '<tr onclick=getBoard('+response[i].boardId+')><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class=middle>'+response[i].cnt+'</span></td></tr>'  
+                    else if(11<=response.list[i].cnt && response.list[i].cnt<=20){
+                        html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=middle>'+response.list[i].cnt+'</span></td></tr>'  
                     }
-                    else if(response[i].cnt>20){
-                        html += '<tr onclick=getBoard('+response[i].boardId+')><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class=high>'+response[i].cnt+'</span></td></tr>'  
+                    else if(response.list[i].cnt>20){
+                        html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=high>'+response.list[i].cnt+'</span></td></tr>'  
                     }
                 }
+                var paginationHtml = '';
+                    if(response.hasPreviousPage){ //이전 페이지가 true 라면
+                        paginationHtml += '<a onclick="getFind('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
+                    }
+                    for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
+                        paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getFind('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
+                    }
+                    if(response.hasNextPage){ //다음 페이지가 true 라면
+                        paginationHtml += '<a onclick="getFind('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
+                    }
+                    $('.pagination').children().remove()
+                    $('.pagination').append(paginationHtml);
+                    //페이지 번호에 맞게 css 수정
+                    $('#pageNum'+pageNum).css('backgroundColor','#287bff')
+                    $('#pageNum'+pageNum).css('color','#fff')
+               
             }
             else{
                 //게시글 없음 로직 구현
@@ -489,8 +511,7 @@
             $('#bodydata').append(html)
         },
     })
-        }
-    })
+    }
     getPageNum()
     function getPageNum(){
         // id : pageNum
