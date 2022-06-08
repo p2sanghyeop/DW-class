@@ -95,6 +95,7 @@
             <div class="search">
                 <label>
                     <input id="searchBar" type="text" placeholder="작성자를 검색하세요...">
+                    <input id="keyword" type="hidden" value="null">
                 </label>
             </div>
             <div>
@@ -222,7 +223,6 @@
     });
     $('.btn-close').click(function(){
         $('.update-popup').css('display', 'none');
-        location.reload();
     })
 
     let list = document.querySelectorAll('.navigation li');
@@ -302,8 +302,13 @@
 });
     
     function getBoardList(pageNum, pageSize){
+        var controllerUrl = 'http://localhost:8080/api/v1/board/all?pageNum='+pageNum+'&pageSize='+pageSize;
+        var keyword = $('#keyword').val();
+      if (keyword != 'null') {
+        controllerUrl ='http://localhost:8080/api/v1/board/search?writer='+keyword +'&pageNum='+pageNum +'&pageSize='+pageSize;
+      }
         $.ajax({
-        url : 'http://localhost:8080/api/v1/board/all?pageNum='+pageNum+'&pageSize='+pageSize,
+        url : controllerUrl,
         type : 'GET',
         dataType : 'json',
         success : function(response){
@@ -456,17 +461,14 @@
     $('#searchBar').keyup(function(key){
         //엔터를 누를때 출력 hello word를 출력하고 싶음
         //13은 엔터의미
+        var pageNum = 1;
+        var pageSize = 10;
         if(key.keyCode ==13){
-            getFind(1,10)
-            //1. input 값 가져옴
-            
-        }
-    })
-
-    function getFind(pageNum, pageSize){
-        var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
-            console.log(search)
-            //2. ajax 호출
+            var search = $('#searchBar').val().trim();
+            // getFind(1,10)
+            if(search != ''){
+                $('#keyword').val(search)
+            } 
             $.ajax({
         url : 'http://localhost:8080/api/v1/board/search?writer='+search+'&pageNum='+pageNum+'&pageSize='+pageSize,
         type : 'GET',
@@ -511,7 +513,59 @@
             $('#bodydata').append(html)
         },
     })
-    }
+            
+        }
+    })
+
+    // function getFind(pageNum, pageSize){
+    //     var search = $('#searchBar').val();//inpu에 작성한 작성자를 가져옴
+    //         console.log(search)
+    //         //2. ajax 호출
+    //         $.ajax({
+    //     url : 'http://localhost:8080/api/v1/board/search?writer='+search+'&pageNum='+pageNum+'&pageSize='+pageSize,
+    //     type : 'GET',
+    //     dataType : 'json',
+    //     success : function(response){
+    //         console.log(response)
+    //         var html ='';
+    //         if(response.list.length>0){
+    //             for(var i=0; i<response.list.length; ++i){
+    //                 if(0<=response.list[i].cnt && response.list[i].cnt<10){
+    //                     html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=row>'+response.list[i].cnt+'</span></td></tr>'
+    //                 }
+    //                 else if(11<=response.list[i].cnt && response.list[i].cnt<=20){
+    //                     html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=middle>'+response.list[i].cnt+'</span></td></tr>'  
+    //                 }
+    //                 else if(response.list[i].cnt>20){
+    //                     html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'+response.list[i].boardId+'</td><td>'+response.list[i].studentsName+'</td><td>'+response.list[i].title+'</td><td>'+response.list[i].updateAt+'</td><td>'+response.list[i].createAt+'</td><td><span class=high>'+response.list[i].cnt+'</span></td></tr>'  
+    //                 }
+    //             }
+    //             var paginationHtml = '';
+    //                 if(response.hasPreviousPage){ //이전 페이지가 true 라면
+    //                     paginationHtml += '<a onclick="getFind('+(response.pageNum-1)+','+pageSize+')" href="#">Previous</a>';
+    //                 }
+    //                 for(var i=0; i<response.navigatepageNums.length; i++){ //페이지 번호 길이 만큼 for문 실행
+    //                     paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'"onclick="getFind('+response.navigatepageNums[i]+','+pageSize+')"href="#">'+response.navigatepageNums[i]+'</a>';
+    //                 }
+    //                 if(response.hasNextPage){ //다음 페이지가 true 라면
+    //                     paginationHtml += '<a onclick="getFind('+(response.pageNum+1)+','+pageSize+')" href="#">Next</a>';
+    //                 }
+    //                 $('.pagination').children().remove()
+    //                 $('.pagination').append(paginationHtml);
+    //                 //페이지 번호에 맞게 css 수정
+    //                 $('#pageNum'+pageNum).css('backgroundColor','#287bff')
+    //                 $('#pageNum'+pageNum).css('color','#fff')
+               
+    //         }
+    //         else{
+    //             //게시글 없음 로직 구현
+    //             html += '<tr><td colspan=6 style="text-align: center;">게시글이 없습니다</td></tr>'
+    //         }
+    //         $('#bodydata').children().remove()
+    //         $('#bodydata').append(html)
+    //     },
+    // })
+    // }
     getPageNum()
     function getPageNum(){
         // id : pageNum
