@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="year">2022년</div>
+        <div class="month">7월</div>
+        <div class="day">1일</div>
+    </div>
+</body>
+<script>
+console.log(new Date()); // 현재 날짜(로컬 기준) 객체 만들기
+console.log(new Date(2021, 11, 6)) // 지정한 날짜 객체 만들기
+console.log(new Date('2021-12-06T03:24:00')) // 지정한 날짜 객체 만들기
+
+var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
+console.log(date)
+var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // utc 표준시 도출
+console.log(utc)
+var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
+console.log(kstGap)
+var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+console.log(today)
+
+//currentYea, currentMonth 임의지정
+var currentYear = 1
+var currentMonth = 1
+// 이전 달의 마지막 날 날짜와 요일 구하기
+var startDay = new Date(currentYear, currentMonth, 0);
+var prevDate = startDay.getDate();
+var prevDay = startDay.getDay();
+
+// 이번 달의 마지막날 날짜와 요일 구하기
+var endDay = new Date(currentYear, currentMonth + 1, 0);
+var nextDate = endDay.getDate();
+var nextDay = endDay.getDay();
+
+console.log(prevDate, prevDay);
+console.log(nextDate, nextDay);
+
+</script>
+</html>
