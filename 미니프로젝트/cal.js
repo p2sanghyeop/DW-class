@@ -5,7 +5,9 @@ const renderCalender = () => {
   const viewMonth = date.getMonth();
 
   document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+ 
 
+  
   const prevLast = new Date(viewYear, viewMonth, 0);
   const thisLast = new Date(viewYear, viewMonth + 1, 0);
 
