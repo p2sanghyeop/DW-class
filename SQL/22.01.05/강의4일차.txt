@@ -3,7 +3,8 @@
 로컬 - 내가 쓰는 자리 pc 
 로컬주소 = 본인 pc 디폴트 값 - 처음 설정되어 있는 번호(127.0.0.1)
 ip를 적으시오-> 192.168.0.44/localhost
-데이터베이스->오라클 - 국가기관 (MYSQL, Mariadb) - 스타트업, 중견기업
+
+데이터베이스 -> 오라클 - 국가기관 (MYSQL, Mariadb) - 스타트업, 중견기업
 데이터베이스 종류는 여러개이지만 문법은 동일
 데이터베이스를 잘 배우면
 웹, 앱, IOT, 데이터분석분야, AI분야
@@ -11,6 +12,7 @@ ip를 적으시오-> 192.168.0.44/localhost
 모든 어플리케이션의 시작점
 PORT : 서버에 접속할수 있는문
 서비스를 제공해주기 위해 PORT 번호가 필요함
+
 my sql 연동법
 dbeer 실행->mysql선택->비밀번호 입력
 sql 사용법
@@ -18,41 +20,49 @@ select - 원하는 것을 찾을때 쓴다
 세부적으로 actor_id, first_name, last_name을 찾을수 있다
 ,를 쓰지 않으면 검색이 안되고 _를 쓰지 않으면 에러가 난다
 from 어디서 찾을 것일지 문서를 지정해준다
-->.을 쓰지 않으면 에러남
+-> .을 쓰지 않으면 에러남
 where actor의 번호가 몇번인지 작성
-->=를 쓰지 않으면 에러남
+-> =를 쓰지 않으면 에러남
+
 구글링 방법 - 되도록 영어로 구글링
 ->영어가 안될시 velog를 참조
 ->영어를 잘할시 stackoverflow를 이용
 ->둘다 안나올시 가장 상단부터 본다
 영어구글링
 ->how to/ what is -> 목적 
+
 my sql->db->table->data
 데이터는 테이블에 있고 데이터 베이스는 테이블을 관리
 테이블은 서로 관계가 있음->관계형 데이터베이스(RDB)
 비관계형데이터베이스->no sql(몽고db)->IOT, AI에 쓰임
 서로 데이터를 공유할수있음->관계형이기 때문->데이터 조작이 힘듬
+
 데이터 타입 - pc가 인식하지 못하기 때문에 입력
 int-숫자(정수)=4byte 
 1byte=8bit(pc의 최소단위) - 2의 팔제곱
 서브넷마스크는0부터 세기 때문에 255가 된다
 VARCHAR-문자
+
 DDL(Data Definition Language) 데이터 정의 언어
 ->각 릴레이션을 정의하기 위해 사용하는 언어
 CREATE TABLE - table name : table 생성
 DROP TABLE - table name : table 삭제
 ALTER TABLE - table name table 수정(테이블 이름변경)
+
 DML(Data Mainpulation Languange) 데이터 조작 언어
 ->데이터를 추가, 수정, 삭제하기 위한 데이터 관리언어
 SELECT : 데이터 조회
 DELETE : 데이터 삭제
 UPDATE : 데이터 수정
 INSERT : 데이터 생성
+
 DCL(Data Control Language) 데이터 제어 언어
 ->데이터를 관리하고 접근권한을 다루기 위한 언어
 GRANT : 특정 사용자에게 권한 부여
 REVOKE : 특정 사용자 권한 회수
+
 블록체인은 데이터베이스다
+
 가장 위 박스 priverkey(PK) - 테이블의 고유값->겹칠수 없음=고유번호
 속성, 컬럼 propertis -하나의 행
 select 컬럼이름
@@ -60,5 +70,5 @@ from 테이블
 where 조건, 필터링
 * 에스터리스크 모든 컬럼 조회 
 순서
-from먼저 조회 where을 조회, select를 조회->1.from 2.where 3.select
+from먼저 조회 where을 조회, select를 조회 -> 1.from 2.where 3.select
 테이블 먼저 입력하고 데이터를 입력한다
