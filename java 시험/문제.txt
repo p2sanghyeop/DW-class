@@ -1,9 +1,8 @@
 40번 찾아 insert
+
 월급 3000이상 사원 삭제
 
-
 git config --global pull.rebase true
-
 
 쿼리스트링이용
 a로 시작하는 사람수 구하기
